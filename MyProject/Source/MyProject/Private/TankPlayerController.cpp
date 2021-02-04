@@ -1,7 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+// Default Implementation Source file
 #include "TankPlayerController.h"
+
+// Locals include
+#include "Tank.h"
 
 // Implementation for Get Controller
 ATank* ATankPlayerController::GetControlledTank() const
@@ -11,7 +14,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 }
 
 // Implementation for aiming the cross over
-void ATankPlayerController::AimTowardsCrosshair() const
+void ATankPlayerController::AimTowardsCross_hair() const
 {
 	if(!GetControlledTank()) return;
 
@@ -22,10 +25,10 @@ void ATankPlayerController::AimTowardsCrosshair() const
 		GetControlledTank()->AimAt(HitLocation);
 }
 
-// Get world location for line trace through crosshair
+// Get world location for line trace through cross-hair
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
-	/// Find the crosshair position
+	/// Find the crosshair position in the pixel co-ordinates
 	/// Calculating the screen location
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
@@ -46,12 +49,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 
 	/// Line-tracing along that direction and see what hit
 	struct FHitResult Hit;
-	const auto Start = PlayerCameraManager->GetCameraLocation(),
-		End = Start + (LookDirection * LineTraceRange);
 	if (!GetWorld()->LineTraceSingleByChannel(
 		Hit,
-		Start,
-		End,
+		PlayerCameraManager->GetCameraLocation(),
+		PlayerCameraManager->GetCameraLocation() + LookDirection * LineTraceRange,
 		ECollisionChannel::ECC_Visibility
 	))
 	{
@@ -73,6 +74,6 @@ void ATankPlayerController::BeginPlay()
 void ATankPlayerController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	AimTowardsCrosshair();
+	AimTowardsCross_hair();
 }
 

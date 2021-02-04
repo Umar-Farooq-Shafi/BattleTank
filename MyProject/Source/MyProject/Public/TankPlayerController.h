@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Tank.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
+
+// Forward Declaration
+class ATank;
 
 /**
  * 
@@ -25,7 +27,7 @@ public:
 
 	/// Start the tank moving the barrel so that
 	/// a shot would hit crosshair intersects world
-	void AimTowardsCrosshair() const;
+	void AimTowardsCross_hair() const;
 
 	// Boolean if pawn hit to something
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
@@ -38,5 +40,5 @@ private:
 	float CrossHairYLocation = 0.33333f;
 
 	UPROPERTY(EditAnywhere)
-	double LineTraceRange = 1000000;
+	double LineTraceRange = 1000000.f;
 };

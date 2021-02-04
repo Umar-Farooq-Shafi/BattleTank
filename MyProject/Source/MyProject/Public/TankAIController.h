@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Tank.h"
 #include "AIController.h"
 #include "TankAIController.generated.h"
+
+// Forward Declaration
+class ATank;
 
 /**
  * 
@@ -18,12 +20,10 @@ class MYPROJECT_API ATankAIController : public AAIController
 private:
 	// Override the parent function
 	virtual void BeginPlay() override;
+	
 public:
-	// Get player controller
-	ATank* GetControlledTank() const;
-
-	// Get player
-	ATank* GetPlayerTank() const;
-
 	virtual void Tick(float DeltaSeconds) override;
+
+private:
+	double LastFireTime{ 0 };
 };
