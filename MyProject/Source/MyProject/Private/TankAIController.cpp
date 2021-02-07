@@ -16,19 +16,14 @@ void ATankAIController::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 
 	// Get player tank
-	const auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	if (!PlayerTank ||
-		!(FPlatformTime::Seconds() - LastFireTime > 3)) return;
-
 	// Get controlled tank(AI)
+	const auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	const auto ControlledTank = Cast<ATank>(GetPawn());
-	if(!ControlledTank) return;
-	
+	if (!PlayerTank && !ControlledTank) return;
+
 	// Aim towards the player
 	ControlledTank->AimAt(PlayerTank->GetActorLocation());
 
 	// Fire towards the player
 	ControlledTank->Fire();
-	
-	LastFireTime = FPlatformTime::Seconds();
 }

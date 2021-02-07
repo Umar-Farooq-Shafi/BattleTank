@@ -20,6 +20,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+// Move barrel
 void UTankAimingComponent::MoveBarrelTowards(const FVector& AimDirection) const
 {
 	if (!Barrel || !Turret) return;
@@ -30,7 +31,8 @@ void UTankAimingComponent::MoveBarrelTowards(const FVector& AimDirection) const
 	Turret->Rotate(DeltaRotate.Yaw);
 }
 
-void UTankAimingComponent::AimAt(const FVector& HitLocation, const float& LaunchSpeed)
+// Aim towards(at) the enemy
+void UTankAimingComponent::AimAt(const FVector& HitLocation, const float& LaunchSpeed) const
 {
 	if (!Barrel) return;
 	
@@ -48,9 +50,6 @@ void UTankAimingComponent::AimAt(const FVector& HitLocation, const float& Launch
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	))
 		MoveBarrelTowards(OutLaunchVelocity.GetSafeNormal());
-	
-	UE_LOG(LogTemp, Warning, TEXT("Aiming at : %s"),
-		*OutLaunchVelocity.GetSafeNormal().ToString());
 }
 
 // Setter for Barrel property
@@ -60,6 +59,7 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 	Barrel = BarrelToSet;
 }
 
+// Setter for Turret property
 void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 {
 	if(!TurretToSet) return;

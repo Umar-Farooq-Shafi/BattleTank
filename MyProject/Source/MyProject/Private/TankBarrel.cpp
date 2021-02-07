@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "TankBarrel.h"
 
 void UTankBarrel::Elevate(const float& RelativeSpeed)
@@ -10,9 +9,9 @@ void UTankBarrel::Elevate(const float& RelativeSpeed)
 	SetRelativeRotation(
 		FRotator(
 			FMath::Clamp<float>(
-				GetRelativeRotation().Pitch + 
-					FMath::Clamp<float>(RelativeSpeed, -1, 1) * 
-					MaxDegreesPerSeconds * GetWorld()->DeltaTimeSeconds,
+				GetRelativeRotation().Pitch +
+				FMath::Clamp<float>(RelativeSpeed, -1, 1) *
+				MaxDegreesPerSeconds * GetWorld()->DeltaTimeSeconds,
 				MinElevationDegree,
 				MaxElevationDegree
 				),

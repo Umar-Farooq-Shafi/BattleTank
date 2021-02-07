@@ -6,9 +6,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-// Forward Declaration
-class ATank;
-
 /**
  * 
  */
@@ -17,13 +14,10 @@ class MYPROJECT_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	// Override the parent function
 	virtual void BeginPlay() override;
 	
 public:
 	virtual void Tick(float DeltaSeconds) override;
-
-private:
-	double LastFireTime{ 0 };
 };

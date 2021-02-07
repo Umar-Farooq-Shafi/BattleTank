@@ -20,13 +20,10 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-protected:
-
-public:	
 	// Moving the barrel towards to aim
 	void MoveBarrelTowards(const FVector&) const;
 	
-	void AimAt(const FVector&, const float&);
+	void AimAt(const FVector&, const float&) const;
 
 	void SetBarrelReference(UTankBarrel*);
 	

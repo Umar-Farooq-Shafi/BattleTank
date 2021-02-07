@@ -8,6 +8,7 @@
 
 // Forward Declaration
 class UTankAimingComponent;
+class UTankMovementComponent;
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
@@ -27,6 +28,9 @@ protected:
 
 	UTankAimingComponent* TankAimingComponent{ nullptr };
 
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent{ nullptr };
+
 public:	
 	// Called every frame
 	// virtual void Tick(float DeltaTime) override;
@@ -43,15 +47,17 @@ public:
 	void SetTurretReference(UTankTurret* TurretToSet) const;
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void Fire() const;
+	void Fire();
 
 private:
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 4000.f;
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	// Local barrel reference for spawning projectile
 	UTankBarrel* Barrel{ nullptr };
+
+	double LastFireTime{ 0 };
 };

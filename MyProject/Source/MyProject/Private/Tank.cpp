@@ -5,6 +5,7 @@
 
 // Locals include
 #include "TankAimingComponent.h"
+// #include "TankMovementComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "Projectile.h"
@@ -16,6 +17,7 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	// TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 // Called when the game starts or when spawned
@@ -55,16 +57,18 @@ void ATank::SetTurretReference(UTankTurret* TurretToSet) const
 	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
-void ATank::Fire() const
+void ATank::Fire()
 {
-	if(!Barrel) return;
+	if (Barrel && ((FPlatformTime::Seconds() - LastFireTime > 3)))
+	{
+		// Spawn a projectile at socket location
+		GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile"))
+			)->LaunchProjectile(LaunchSpeed);
 
-	// Spawn a projectile at socket location
-	FVector OutLocation, OutRotation;
-	GetWorld()->SpawnActor<AProjectile>(
-		ProjectileBlueprint,
-		Barrel->GetSocketLocation(FName("Projectile")),
-		Barrel->GetSocketRotation(FName("Projectile"))
-		)->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
 }
 
